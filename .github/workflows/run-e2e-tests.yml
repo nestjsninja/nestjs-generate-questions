@@ -24,9 +24,9 @@ jobs:
       - name: Use Node
         uses: actions/setup-node@v3
         with:
-          node-version: 19
+          node-version: 19.0.1
 
-      - run: npm i
+      - run: npm i --force
 
       - run: npm run test:e2e
         env:
