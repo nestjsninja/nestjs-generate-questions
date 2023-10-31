@@ -13,5 +13,8 @@
   "moduleNameMapper": {
     "@app/common/(.*)": "<rootDir>/../libs/common/src/$1",
     "@app/common": "<rootDir>/../libs/common/src"
-  }
+  },
+  "globalSetup": "./test/setup.ts",
+  "globalTeardown": "./test/teardown.ts",
+  "openHandlesTimeout": 10000
 }
