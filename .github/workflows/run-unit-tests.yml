@@ -16,7 +16,7 @@ jobs:
           node-version: 19
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
 
       - name: Unit testing
         run: |
