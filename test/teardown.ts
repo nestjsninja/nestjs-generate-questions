@@ -1,3 +1,3 @@
-// module.exports = async () => {
-//   await globalThis.databaseConfig.dropDatabase(true);
-// };
+module.exports = async () => {
+  await globalThis.databaseConfig.dropDatabase();
+};

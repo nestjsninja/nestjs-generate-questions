@@ -7,12 +7,15 @@ import { randomUUID } from 'node:crypto';
 const prisma = new PrismaClient();
 
 export class TestDBInitiator {
+  private SCHEMA = '';
+
   private generateDatabaseURL(schema: string) {
     if (!process.env.DATABASE_URL) {
       throw new Error('Please provide a DATABASE_URL environment variable.');
     }
 
     const url = new URL(process.env.DATABASE_URL);
+    this.SCHEMA = schema;
 
     url.searchParams.set('schema', schema);
 
@@ -32,9 +35,9 @@ export class TestDBInitiator {
     console.log('✓ Done. Test database is ready to accept connections ✓\n');
   }
 
-  async dropDatabase(schema) {
-    console.log(`Dropping schema: '${schema}'`);
-    await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
+  async dropDatabase() {
+    console.log(`Dropping schema: '${this.SCHEMA}'`);
+    await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${this.SCHEMA}" CASCADE`);
 
     await prisma.$disconnect();
   }
