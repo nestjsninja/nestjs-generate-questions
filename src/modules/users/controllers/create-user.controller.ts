@@ -1,24 +1,34 @@
 import {
     Body,
+    ConflictException,
     Controller,
     HttpCode,
+    HttpException,
     HttpStatus,
     Post
 } from '@nestjs/common';
-import { CreateUserUseCase } from '../use-case/create-user';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from '../dto/create-user.dto';
 import { UserDto } from '../dto/user.dto';
+import { CreateUserUseCase } from '../use-case/create-user';
 
-@Controller('user')
+@Controller('/user')
 @ApiTags('user')
 export class CreateUserController {
     constructor(private createUserUseCase: CreateUserUseCase) { }
 
-    @HttpCode(HttpStatus.OK)
     @ApiOkResponse({ type: UserDto })
-    @Post('create')
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.createUserUseCase.create();
+    @HttpCode(HttpStatus.CREATED)
+    @Post('')
+    handle(@Body() createUserDto: CreateUserDto) {
+        try {
+            const user = this.createUserUseCase.execute(createUserDto);
+            return user;
+        } catch (e) {
+            if (e instanceof ConflictException) {
+                throw new HttpException('This username is already in use', HttpStatus.CONFLICT);
+            }
+            throw new HttpException('Was not possible to register', HttpStatus.BAD_REQUEST);
+        }
     }
 }
