@@ -11,8 +11,8 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@app/common/(.*)": "<rootDir>/libs/common/src/$1",
-    "@app/common": "<rootDir>/libs/common/src"
+    "@app/common/(.*)": "<rootDir>/src/modules/common/$1",
+    "@app/common": "<rootDir>/src/modules/common"
   },
   "globalSetup": "./test/setup.ts",
   "globalTeardown": "./test/teardown.ts",
