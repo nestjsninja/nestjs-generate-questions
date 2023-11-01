@@ -29,8 +29,10 @@ describe('User (E2E) Get many', () => {
         await app.close();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         UUID = randomUUID();
+
+        await prisma.user.deleteMany();
     })
 
     test('[GET] /user', async () => {

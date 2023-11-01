@@ -1,5 +1,5 @@
 
-import { UserRepository } from '@app/common/database/repository/user.repositoy';
+import { UserRepository } from '@app/common';
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 
