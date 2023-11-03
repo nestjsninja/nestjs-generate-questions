@@ -5,6 +5,7 @@ on: [pull_request]
 jobs:
   run-e2e-tests:
     name: Run E2E Tests
+    environment: production
     runs-on: ubuntu-latest
 
     services:
@@ -37,3 +38,4 @@ jobs:
       - run: npm run test:e2e
         env:
           DATABASE_URL: 'postgresql://docker:docker@localhost:5432/project?schema=public'
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

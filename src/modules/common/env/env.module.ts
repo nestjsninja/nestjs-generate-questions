@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config'
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.example' : '.env',
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),

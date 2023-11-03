@@ -45,17 +45,17 @@ describe('User (E2E) Update', () => {
             username: `updated-user-${UUID}`,
         };
 
-        const response = await request(httpServer)
-            .patch(`/user/${user.id}`)
-            .send(updateUserDto);
-
-        expect(response.statusCode).toBe(200);
-
         const userOnDatabase = await prisma.user.findUnique({
             where: {
                 id: user.id,
             },
         });
+
+        const response = await request(httpServer)
+            .patch(`/user/${user.id}`)
+            .send(updateUserDto);
+
+        expect(response.statusCode).toBe(200);
 
         expect(response.body).toEqual({ ...userOnDatabase, ...updateUserDto });
     });

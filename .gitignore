@@ -3,6 +3,7 @@
 /node_modules
 
 # Logs
+.env
 logs
 *.log
 npm-debug.log*
@@ -33,3 +34,4 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+

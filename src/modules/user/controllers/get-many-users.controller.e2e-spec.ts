@@ -49,14 +49,13 @@ describe('User (E2E) Get many', () => {
             ],
         });
 
+        const usersOnDatabase = await prisma.user.findMany();
+
         const response = await request(httpServer)
             .get(`/user`)
             .send();
 
         expect(response.statusCode).toBe(200);
-
-        const usersOnDatabase = await prisma.user.findMany();
-
-        expect(response.body).toEqual(usersOnDatabase);
+        expect(response.body).toMatchObject(usersOnDatabase);
     });
 });

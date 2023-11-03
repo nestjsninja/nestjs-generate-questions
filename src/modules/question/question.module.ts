@@ -1,4 +1,4 @@
-import { DatabaseModule } from '@app/common';
+import { AIModule, DatabaseModule } from '@app/common';
 import { Module } from '@nestjs/common';
 import { CreateQuestionController } from './controllers/create-question.controller';
 import { CreateQuestionUseCase } from './use-case/create-question';
@@ -9,7 +9,7 @@ import { GetManyQuestionsUseCase } from './use-case/get-many-questions';
 
 @Module({
     controllers: [CreateQuestionController, GetQuestionByIdController, GetManyQuestionsController],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AIModule],
     providers: [CreateQuestionUseCase, GetQuestionByIdUseCase, GetManyQuestionsUseCase],
     exports: [],
 })

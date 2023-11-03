@@ -41,17 +41,17 @@ describe('User (E2E) Get by id', () => {
             },
         });
 
-        const response = await request(httpServer)
-            .get(`/user/${user.id}`)
-            .send();
-
-        expect(response.statusCode).toBe(200);
-
         const userOnDatabase = await prisma.user.findUnique({
             where: {
                 id: user.id,
             },
         });
+
+        const response = await request(httpServer)
+            .get(`/user/${user.id}`)
+            .send();
+
+        expect(response.statusCode).toBe(200);
 
         expect(response.body).toEqual(userOnDatabase);
     });
