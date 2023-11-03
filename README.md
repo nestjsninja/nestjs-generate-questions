@@ -2,31 +2,14 @@
 
 This repository houses a question generation tool, enabling users to input a text, from which it generates multiple questions for selection, with one of them being the correct answer.
 
-Common libraries
+### Technologies
 
-- [x] Base library with database and user repository
-- [x] unit-tests for all parts of the library
-- [x] Questions and answers repositories
-- [x] Swagger (http://localhost:3000/api)
-
-User module
-
-- [x] Module
-- [x] Use-case
-- [x] unit-tests
-- [x] e2e-tests
-
-Question and answers module
-
-- [x] Module
-- [x] Use-case
-- [x] unit-tests
-- [ ] e2e-tests
-
-To-do
-
-- [ ] Review unit-test of questions create
-- [ ] Review e2e-test of questions create
+- NestJS
+- Prisma
+- Jest
+- SWC
+- OpenAI
+- Zod
 
 ### How to use
 
@@ -75,3 +58,31 @@ Example of POST /question response
 ### swagger
 
 ![Preview](https://raw.githubusercontent.com/henriqueweiand/nestjs-generate-questions/main/assets/swagger.png)
+
+### Changes
+
+Common libraries
+
+- [x] Base library with database and user repository
+- [x] unit-tests for all parts of the library
+- [x] Questions and answers repositories
+- [x] Swagger (http://localhost:3000/api)
+
+User module
+
+- [x] Module
+- [x] Use-case
+- [x] unit-tests
+- [x] e2e-tests
+
+Question and answers module
+
+- [x] Module
+- [x] Use-case
+- [x] unit-tests
+- [ ] e2e-tests
+
+To-do
+
+- [ ] Review unit-test of questions create
+- [ ] Review e2e-test of questions create
