@@ -1,7 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { UsersModule } from '../user.module';
+import { UserModule } from '../user.module';
 import { DatabaseModule, PrismaService } from '@app/common';
 import { randomUUID } from 'node:crypto'
 
@@ -13,7 +13,7 @@ describe('User (E2E) Update', () => {
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
-            imports: [UsersModule, DatabaseModule],
+            imports: [UserModule, DatabaseModule],
             providers: [],
         }).compile();
 
