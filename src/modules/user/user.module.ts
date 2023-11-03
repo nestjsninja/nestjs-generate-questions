@@ -17,4 +17,4 @@ import { UpdateUserController } from './controllers/update-user.controller';
     providers: [CreateUserUseCase, GetUserByIdUseCase, GetManyUsersUseCase, DeleteUserUseCase, UpdateUserUseCase],
     exports: [],
 })
-export class UsersModule { }
+export class UserModule { }

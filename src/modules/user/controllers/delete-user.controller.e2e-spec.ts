@@ -1,11 +1,11 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { UsersModule } from '../users.module';
+import { UsersModule } from '../user.module';
 import { DatabaseModule, PrismaService } from '@app/common';
 import { randomUUID } from 'node:crypto'
 
-describe('User (E2E) Get by id', () => {
+describe('User (E2E) Delete', () => {
     let app: INestApplication;
     let prisma: PrismaService;
     let httpServer: any;
@@ -33,7 +33,7 @@ describe('User (E2E) Get by id', () => {
         UUID = randomUUID();
     })
 
-    test('[GET] /user/:id', async () => {
+    test('[DELETE] /user/:id', async () => {
         const user = await prisma.user.create({
             data: {
                 username: `user-${UUID}`,
@@ -42,7 +42,7 @@ describe('User (E2E) Get by id', () => {
         });
 
         const response = await request(httpServer)
-            .get(`/user/${user.id}`)
+            .delete(`/user/${user.id}`)
             .send();
 
         expect(response.statusCode).toBe(200);
@@ -53,7 +53,7 @@ describe('User (E2E) Get by id', () => {
             },
         });
 
-        expect(response.body).toEqual(userOnDatabase);
+        expect(userOnDatabase).toBeNull();
     });
 
 });

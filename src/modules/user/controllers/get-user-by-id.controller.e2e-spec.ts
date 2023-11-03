@@ -1,11 +1,11 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { UsersModule } from '../users.module';
+import { UsersModule } from '../user.module';
 import { DatabaseModule, PrismaService } from '@app/common';
 import { randomUUID } from 'node:crypto'
 
-describe('User (E2E) Get many', () => {
+describe('User (E2E) Get by id', () => {
     let app: INestApplication;
     let prisma: PrismaService;
     let httpServer: any;
@@ -29,34 +29,31 @@ describe('User (E2E) Get many', () => {
         await app.close();
     });
 
-    beforeEach(async () => {
+    beforeEach(() => {
         UUID = randomUUID();
-
-        await prisma.user.deleteMany();
     })
 
-    test('[GET] /user', async () => {
-        await prisma.user.createMany({
-            data: [
-                {
-                    username: `user-${UUID}`,
-                    password: '123456',
-                },
-                {
-                    username: `user-${randomUUID()}`,
-                    password: '123456',
-                },
-            ],
+    test('[GET] /user/:id', async () => {
+        const user = await prisma.user.create({
+            data: {
+                username: `user-${UUID}`,
+                password: '123456',
+            },
         });
 
         const response = await request(httpServer)
-            .get(`/user`)
+            .get(`/user/${user.id}`)
             .send();
 
         expect(response.statusCode).toBe(200);
 
-        const usersOnDatabase = await prisma.user.findMany();
+        const userOnDatabase = await prisma.user.findUnique({
+            where: {
+                id: user.id,
+            },
+        });
 
-        expect(response.body).toEqual(usersOnDatabase);
+        expect(response.body).toEqual(userOnDatabase);
     });
+
 });
