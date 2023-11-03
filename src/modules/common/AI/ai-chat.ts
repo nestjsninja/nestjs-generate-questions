@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, OnModuleInit } from '@nestjs/common';
 import { ChatGPTAPI as IChatGPTAPI, ChatMessage } from 'chatgpt';
 import { EnvService } from '../env';
 import { AIChatGenerator } from './interface/ai-chat-generator';
@@ -25,8 +25,9 @@ export class AIChat implements AIChatGenerator, OnModuleInit {
       const response = await this.API.sendMessage(question);
       return response;
     } catch (e) {
-      console.log(e)
-      return null;
+      throw new InternalServerErrorException('Was not possible to generate the answers');
     }
+
+    return null;
   }
 }

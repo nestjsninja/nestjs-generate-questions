@@ -6,6 +6,8 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaUserRepository } from './prisma/repository/prisma-user.repository';
 import { PrismaQuestionRepository } from './prisma/repository/prisma-question.repository';
 import { QuestionRepository } from './repository/question.repositoy';
+import { PrismaAnswerRepository } from './prisma/repository/prisma-answer.repository';
+import { AnswerRepository } from './repository/answer.repositoy';
 
 @Module({
   providers: [
@@ -17,8 +19,12 @@ import { QuestionRepository } from './repository/question.repositoy';
     {
       provide: QuestionRepository,
       useClass: PrismaQuestionRepository
+    },
+    {
+      provide: AnswerRepository,
+      useClass: PrismaAnswerRepository
     }
   ],
-  exports: [PrismaService, UserRepository, QuestionRepository],
+  exports: [PrismaService, UserRepository, QuestionRepository, AnswerRepository],
 })
 export class DatabaseModule { }

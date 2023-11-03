@@ -37,13 +37,17 @@ describe('PrismaQuestionRepository', () => {
 
   it('should find a question by id', async () => {
     const id = '1';
-    const expectedQuestion = { id: '1', title: 'Question title', content: 'Question content' };
+    const expectedQuestion = { id: '1', title: 'Question title', content: 'Question content', answers: [] };
     prismaService.question.findUnique = jest.fn().mockResolvedValue(expectedQuestion);
 
     const question = await prismaQuestionRepository.findById(id);
 
     expect(question).toEqual(expectedQuestion);
-    expect(prismaService.question.findUnique).toHaveBeenCalledWith({ where: { id } });
+    expect(prismaService.question.findUnique).toHaveBeenCalledWith({
+      where: { id }, include: {
+        answers: true,
+      }
+    });
   });
 
   it('should call prismaService.findMany when findMany is called', async () => {

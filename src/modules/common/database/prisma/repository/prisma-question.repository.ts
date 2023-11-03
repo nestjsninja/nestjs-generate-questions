@@ -12,6 +12,9 @@ export class PrismaQuestionRepository implements QuestionRepository {
 			where: {
 				id,
 			},
+			include: {
+				answers: true,
+			}
 		})
 
 		if (!question) {
@@ -29,7 +32,7 @@ export class PrismaQuestionRepository implements QuestionRepository {
 
 	async create(data: Prisma.QuestionCreateInput) {
 		const question = await this.prisma.question.create({
-			data,
+			data
 		});
 
 		return question;
