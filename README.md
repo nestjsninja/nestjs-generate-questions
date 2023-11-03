@@ -21,6 +21,7 @@ Question and answers module
 - [x] Module
 - [x] Use-case
 - [x] unit-tests
+- [ ] e2e-tests
 
 To-do
 
