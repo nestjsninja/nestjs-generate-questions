@@ -1,11 +1,32 @@
-import { Injectable } from '@nestjs/common'
-import { AIChatGenerator } from './interface/ai-chat-generator'
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ChatGPTAPI as IChatGPTAPI, ChatMessage } from 'chatgpt';
+import { EnvService } from '../env';
+import { AIChatGenerator } from './interface/ai-chat-generator';
 
 @Injectable()
-export class AIChat implements AIChatGenerator {
-  constructor(private aIChatGenerator: AIChatGenerator) { }
+export class AIChat implements AIChatGenerator, OnModuleInit {
+  private API: IChatGPTAPI;
 
-  ask(question: string): Promise<string> {
-    return this.aIChatGenerator.ask(question)
+  constructor(
+    private envService: EnvService) {
+  }
+
+  async onModuleInit() {
+    const importDynamic = new Function('modulePath', 'return import(modulePath)')
+    const { ChatGPTAPI } = await importDynamic('chatgpt')
+
+    this.API = new ChatGPTAPI({
+      apiKey: this.envService.get('OPENAI_API_KEY'),
+    });
+  }
+
+  async ask(question: string): Promise<ChatMessage | null> {
+    try {
+      const response = await this.API.sendMessage(question);
+      return response;
+    } catch (e) {
+      console.log(e)
+      return null;
+    }
   }
 }

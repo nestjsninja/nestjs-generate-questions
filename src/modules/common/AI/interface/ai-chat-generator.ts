@@ -1,4 +1,5 @@
+import { ChatMessage } from "chatgpt";
 
 export abstract class AIChatGenerator {
-    abstract ask(id: string): Promise<string | null>
+    abstract ask(question: string): Promise<ChatMessage | null>
 }
