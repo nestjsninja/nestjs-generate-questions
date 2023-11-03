@@ -1,11 +1,11 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { UsersModule } from '../users.module';
+import { UserModule } from '../user.module';
 import { DatabaseModule, PrismaService } from '@app/common';
 import { randomUUID } from 'node:crypto'
 
-describe('User (E2E) Delete', () => {
+describe('User (E2E) Update', () => {
     let app: INestApplication;
     let prisma: PrismaService;
     let httpServer: any;
@@ -13,7 +13,7 @@ describe('User (E2E) Delete', () => {
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
-            imports: [UsersModule, DatabaseModule],
+            imports: [UserModule, DatabaseModule],
             providers: [],
         }).compile();
 
@@ -33,7 +33,7 @@ describe('User (E2E) Delete', () => {
         UUID = randomUUID();
     })
 
-    test('[DELETE] /user/:id', async () => {
+    test('[PATCH] /user/:id', async () => {
         const user = await prisma.user.create({
             data: {
                 username: `user-${UUID}`,
@@ -41,9 +41,13 @@ describe('User (E2E) Delete', () => {
             },
         });
 
+        const updateUserDto = {
+            username: `updated-user-${UUID}`,
+        };
+
         const response = await request(httpServer)
-            .delete(`/user/${user.id}`)
-            .send();
+            .patch(`/user/${user.id}`)
+            .send(updateUserDto);
 
         expect(response.statusCode).toBe(200);
 
@@ -53,7 +57,7 @@ describe('User (E2E) Delete', () => {
             },
         });
 
-        expect(userOnDatabase).toBeNull();
+        expect(response.body).toEqual({ ...userOnDatabase, ...updateUserDto });
     });
 
 });

@@ -15,5 +15,33 @@ model User {
   username String @unique
   password String
 
+  Question Question[]
+
   @@map("users")
+}
+
+model Question {
+  id        String    @id @default(uuid())
+  content   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  authorId  String    @map("author_id")
+
+  author  User     @relation(fields: [authorId], references: [id])
+  answers Answer[]
+
+  @@map("questions")
+}
+
+model Answer {
+  id         String    @id @default(uuid())
+  content    String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  questionId String    @map("question_id")
+  correct    Boolean   @default(false)
+
+  question Question @relation(fields: [questionId], references: [id])
+
+  @@map("answers")
 }
