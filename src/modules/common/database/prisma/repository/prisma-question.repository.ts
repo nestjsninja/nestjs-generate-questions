@@ -21,6 +21,12 @@ export class PrismaQuestionRepository implements QuestionRepository {
 		return question;
 	}
 
+	async findMany(): Promise<Question[]> {
+		const questions = await this.prisma.question.findMany()
+
+		return questions;
+	}
+
 	async create(data: Prisma.QuestionCreateInput) {
 		const question = await this.prisma.question.create({
 			data,

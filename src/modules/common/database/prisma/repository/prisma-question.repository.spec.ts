@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma.service';
 import { PrismaQuestionRepository } from './prisma-question.repository';
-import { Prisma, Question } from '@prisma/client';
+import { Question } from '@prisma/client';
 
 class PrismaServiceMock {
   question = {
@@ -44,6 +44,25 @@ describe('PrismaQuestionRepository', () => {
 
     expect(question).toEqual(expectedQuestion);
     expect(prismaService.question.findUnique).toHaveBeenCalledWith({ where: { id } });
+  });
+
+  it('should call prismaService.findMany when findMany is called', async () => {
+    const questions = [
+      {
+        id: 'fsdfsd-sdfsdfsd-sdfsdfsd-sdfsdf',
+        content: 'John Doe',
+      },
+      {
+        id: 'fsdfsd-sdfsdfsd-sdfsdfsd-sdfsdf',
+        content: 'Jane Doe2',
+      },
+    ] as Question[];
+    prismaService.question.findMany = jest.fn().mockReturnValueOnce(questions);
+
+    const result = await prismaQuestionRepository.findMany();
+
+    expect(result).toEqual(questions);
+    expect(prismaService.question.findMany).toHaveBeenCalled();
   });
 
   it('should delete a question by id', async () => {
