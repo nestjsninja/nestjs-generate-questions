@@ -68,7 +68,6 @@ export class CreateQuestionUseCase {
 
             return updatedQuestion;
         } catch (e) {
-            console.log(e);
             throw new BadRequestException('Was not possible to register');
         }
     }
