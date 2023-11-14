@@ -9,6 +9,8 @@ export class DeleteUserUseCase {
     async execute(id: string) {
         try {
             await this.userRepository.delete(id);
+
+            return true;
         } catch (e) {
             throw new InternalServerErrorException();
         }
