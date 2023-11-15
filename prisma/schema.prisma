@@ -15,7 +15,7 @@ model User {
   username String @unique
   password String
 
-  questions Question[]
+  Question Question[]
 
   @@map("users")
 }
