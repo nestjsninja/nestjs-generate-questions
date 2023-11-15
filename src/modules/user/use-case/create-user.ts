@@ -2,12 +2,13 @@
 import { UserRepository } from '@app/common';
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
+import { CreateUserInput } from '../dto/input/create-user.input';
 
 @Injectable()
 export class CreateUserUseCase {
     constructor(private readonly userRepository: UserRepository) { }
 
-    async execute(createUserDto: CreateUserDto) {
+    async execute(createUserDto: CreateUserDto | CreateUserInput) {
         const isUsernameAvailable = await this.userRepository.findByUsername(createUserDto.username);
 
         if (isUsernameAvailable) {

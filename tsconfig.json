@@ -21,6 +21,12 @@
       "@app/common": [
         "src/modules/common"
       ],
+      "@app/modules": [
+        "src/modules"
+      ],
+      "@app/modules/*": [
+        "src/modules/*"
+      ],
       "@app/common/*": [
         "src/modules/common/*"
       ]

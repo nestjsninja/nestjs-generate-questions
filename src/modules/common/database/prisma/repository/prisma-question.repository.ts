@@ -24,6 +24,23 @@ export class PrismaQuestionRepository implements QuestionRepository {
 		return question;
 	}
 
+	async findByAuthorId(id: string): Promise<Question[] | null> {
+		const questions = await this.prisma.question.findMany({
+			where: {
+				authorId: id
+			},
+			include: {
+				answers: true,
+			}
+		})
+
+		if (!questions) {
+			return null
+		}
+
+		return questions;
+	}
+
 	async findMany(): Promise<Question[]> {
 		const questions = await this.prisma.question.findMany()
 
