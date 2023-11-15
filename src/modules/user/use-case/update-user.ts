@@ -2,13 +2,12 @@
 import { UserRepository } from '@app/common';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { UpdateUserInput } from '../dto/input/update-user.input';
 
 @Injectable()
 export class UpdateUserUseCase {
     constructor(private readonly userRepository: UserRepository) { }
 
-    async execute(id: string, updateUserDto: UpdateUserDto | UpdateUserInput) {
+    async execute(id: string, updateUserDto: UpdateUserDto) {
         const user = await this.userRepository.findById(id);
 
         if (!user) {
